@@ -1,5 +1,7 @@
 import Header from "./components/Header";
-import Content from "./components/Content";
+// import Articles from "./pages/Articles";
+// import ArticleDetails from "./pages/ArticleDetails";
+import Home from "./pages/Home";
 import Footer from "./components/Footer";
 
 function App() {
@@ -7,7 +9,7 @@ function App() {
   return (
     <>
       <Header />
-      <Content/>
+      <Home />
       <Footer />
     </>
   );

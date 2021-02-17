@@ -25,3 +25,14 @@ export function sortPosts(sortBy, data, defaultData) {
 export function getFilteredPosts(key = 'id', value, defaultData) {
     return [...defaultData].filter(item => item[key] === value);
 }
+
+export function toggleActive(element) {
+    element.classList.toggle('active');
+}
+
+export function toggleDarkMode(e) {
+    const element = e.currentTarget;
+    const { body } = document;
+    toggleActive(element);
+    body.classList.toggle('dark-theme');
+}
