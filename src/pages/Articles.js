@@ -4,7 +4,7 @@ import CuratedPosts from "../components/posts/CuratedPosts";
 import Categories from "../components/posts/Categories";
 import { sortPosts, getFilteredPosts } from "../helpers/helper";
 import { getData } from "../helpers/api";
-import loader from "../assets/images/loader.gif";
+import Loader from "../components/Loader";
 
 function Articles() {
     const [users, setUsers] = useState([]);
@@ -151,9 +151,7 @@ function Articles() {
                                 ? (
                                     _posts.map((post) => <PostArticle key={post.id} {...post} />)
                                 ) : (
-                                    <aside className="articles__list-loader">
-                                        <img className="loader" src={loader} alt="site loader" />
-                                    </aside>
+                                    <Loader />
                                 )
                             }
                         </div>

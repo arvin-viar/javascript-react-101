@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import FeaturedPostArticle from "./FeaturedPostArticle";
+import Loader from "../Loader";
 import { getData } from "../../helpers/api";
 
 function FeaturedPosts() {
@@ -36,7 +37,7 @@ function FeaturedPosts() {
                     ? (
                         featuredPosts.map((post) => <FeaturedPostArticle key={post.id} {...post} />)
                     ) : (
-                        <h4>Loading posts...</h4>
+                        <Loader />
                     )
                 }
                 </section>
