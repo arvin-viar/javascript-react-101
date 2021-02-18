@@ -6,7 +6,7 @@ Airtable.configure({
 });
 const react101 = Airtable.base("app7cGsAurL1rBzbi");
 
-export async function getAPIData(table = '', query = {}) {
+export async function getData(table = '', query = {}) {
     const postsTable = await react101(table);
     const postQuery = await postsTable.select(query);
     const rawRecords = await postQuery.all();

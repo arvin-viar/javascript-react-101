@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import PostArticle from "./posts/PostArticle";
 import { sortPosts, getFilteredPosts } from "../helpers/helper";
-import { getAPIData } from "../helpers/api";
+import { getData } from "../helpers/api";
 
 const Main = styled.main`
     background-color: #bebebe;
@@ -24,12 +24,12 @@ function Content() {
 
     useEffect(() => {
         const query = {view: "grid"};
-        const postsData = getAPIData('posts', query);
+        const postsData = getData('posts', query);
         postsData.then((data) => {
             const postsData = data.map(record => {
                 return {
                 id: record.id,
-                dateCreated: record.createdTime,
+                dateCreated: record.fields.Created,
                 title: record.fields.title,
                 body: record.fields.body,
                 authorId: record.fields.authorId,
@@ -42,7 +42,7 @@ function Content() {
 
     useEffect(() => {
         const query = {view: "grid"};
-        const postsData = getAPIData('author', query);
+        const postsData = getData('author', query);
         postsData.then((data) => {
             const authors = data.map(record => {
                 return {

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import PostArticle from "../components/posts/PostArticle";
+import CuratedPosts from "../components/posts/CuratedPosts";
+import Categories from "../components/posts/Categories";
 import { sortPosts, getFilteredPosts } from "../helpers/helper";
-import { getAPIData } from "../helpers/api";
+import { getData } from "../helpers/api";
+import loader from "../assets/images/loader.gif";
 
 function Articles() {
     const [users, setUsers] = useState([]);
@@ -19,15 +22,19 @@ function Articles() {
 
     useEffect(() => {
         const query = {view: "grid"};
-        const postsData = getAPIData('posts', query);
+        const postsData = getData('posts', query);
         postsData.then((data) => {
             const postsData = data.map(record => {
+                const authorId = record.fields.authorId;
                 return {
-                id: record.id,
-                dateCreated: record.createdTime,
-                title: record.fields.title,
-                body: record.fields.body,
-                authorId: record.fields.authorId,
+                    id: record.id,
+                    dateCreated: record.fields.Created,
+                    title: record.fields.title,
+                    body: record.fields.body,
+                    authorId: authorId[0],
+                    authorFirstname: record.fields.authorFirstname,
+                    authorLastname: record.fields.authorLastname,
+                    authorTeam: record.fields.authorTeam,
                 };
             });
             _setPosts(postsData);
@@ -37,11 +44,11 @@ function Articles() {
 
     useEffect(() => {
         const query = {view: "grid"};
-        const postsData = getAPIData('author', query);
-        postsData.then((data) => {
+        const authorsData = getData('author', query);
+        authorsData.then((data) => {
             const authors = data.map(record => {
                 return {
-                    id: record.fields.id,
+                    id: record.id,
                     lastname: record.fields.lastname,
                     firstname: record.fields.firstname,
                 };
@@ -109,35 +116,50 @@ function Articles() {
 
     return (
         <main>
-            <aside className="posts-actions">
-                <select name="sort" id="sort-posts" onChange={handleSort}>
-                    <option value="none">Sort</option>
-                    <option value="dateDesc">By Date Desc</option>
-                    <option value="dateAsc">By Date Asc</option>
-                    <option value="alphaDesc">Alphabetically Desc</option>
-                    <option value="alphaAsc">Alphabetically Asc</option>
-                </select>
-                <select name="sort" id="filter-byauthor" data-filterkey="authorId" onChange={handleFilter}>
-                    <option value="all">All</option>
-                    {users.length > 0 
-                        ? (
-                            users.map((user) => {
-                                return (
-                                    <option key={user.id} value={user.id}>{user.firstname} {user.lastname}</option>
-                                );
-                            })
-                        ) 
-                        : ('')
-                    }
-                </select>
-            </aside>
-            {_posts.length > 0 
-                ? (
-                    _posts.map((post) => <PostArticle key={post.id} {...post} />)
-                ) : (
-                    <h4>Loading posts...</h4>
-                )
-            }
+            <Categories />
+            <CuratedPosts />
+            <section className="articles">
+                <div className="container">
+                    <div className="row">
+                        <header className="articles__header">
+                            <h1>Latest</h1>
+                            <div className="articles__header-options">
+                                <select name="sort" className="post-sort" id="sort-posts" onChange={handleSort}>
+                                    <option value="none">Sort</option>
+                                    <option value="dateDesc">By Date Desc</option>
+                                    <option value="dateAsc">By Date Asc</option>
+                                    <option value="alphaDesc">Alphabetically Desc</option>
+                                    <option value="alphaAsc">Alphabetically Asc</option>
+                                </select>
+                                <select name="filter" className="post-filter"  id="filter-byauthor" data-filterkey="authorId" onChange={handleFilter}>
+                                    <option value="all">Filter By Author</option>
+                                    {users.length > 0 
+                                        ? (
+                                            users.map((user) => {
+                                                return (
+                                                    <option key={user.id} value={user.id}>{user.firstname} {user.lastname}</option>
+                                                );
+                                            })
+                                        ) 
+                                        : ('')
+                                    }
+                                </select>
+                            </div>
+                        </header>
+                        <div className="articles__list">
+                            {_posts.length > 0 
+                                ? (
+                                    _posts.map((post) => <PostArticle key={post.id} {...post} />)
+                                ) : (
+                                    <aside className="articles__list-loader">
+                                        <img className="loader" src={loader} alt="site loader" />
+                                    </aside>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }

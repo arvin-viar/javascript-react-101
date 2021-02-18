@@ -1,12 +1,11 @@
-// import { useState, useEffect } from "react";
-// import PostArticle from "../components/posts/PostArticle";
-// import { sortPosts, getFilteredPosts } from "../helpers/helper";
-// import { getAPIData } from "../helpers/api";
+import Banner from "../components/Banner";
+import FeaturedPosts from "../components/posts/FeaturedPosts";
 
 function Home() {
     return (
-        <main>
-            <h1>This is my Homepage</h1>
+        <main role="main">
+            <Banner />
+            <FeaturedPosts />
         </main>
     );
 }
