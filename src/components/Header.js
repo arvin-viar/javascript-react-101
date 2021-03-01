@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import siteLogo from "../assets/images/gadget-logo-white.png";
 import { toggleDarkMode } from "../helpers/helper";
 
@@ -10,13 +11,13 @@ function Header() {
                     <nav className="main-nav__menu is-hidden">
                         <ul className="main-nav__menu-list">
                             <li className="main-nav__menu-item main-nav__menu-item--selected">
-                                <a href="/">Home</a>
+                                <Link to={`/`}>Home</Link>
                             </li>
                             <li className="main-nav__menu-item">
-                                <a href="/">About Us</a>
+                                <Link to={`/articles`}>Articles</Link>
                             </li>
                             <li className="main-nav__menu-item">
-                                <a href="/">Contact Us</a>
+                                <Link to={`/`}>Contact Us</Link>
                             </li>
                         </ul>
                     </nav>

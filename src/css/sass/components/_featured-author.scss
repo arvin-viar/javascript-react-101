@@ -1,0 +1,24 @@
+.featured-author {
+    padding: 15px 0;
+    &__wrap {
+        padding: 0 15px;
+    }
+    &__info {
+        margin-bottom: 15px;
+    }
+    &__posts {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        li {
+            flex: 1 0 100%;
+            margin-bottom: 15px;
+            @include tablet {
+                flex: 0 0 32%;
+            }
+            @include desktop {
+                flex: 0 0 32%;
+            }
+        }
+    }
+}

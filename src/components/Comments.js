@@ -68,11 +68,11 @@ function Comments() {
                     <h3>Leave a comment</h3>
                     <form>
                         <div className="form-group">
-                            <label for="comment-subject">Subject</label>
+                            <label htmlFor="comment-subject">Subject</label>
                             <input id="comment-subject" type="text" />
                         </div>
                         <div className="form-group">
-                            <label for="comment-message">Message</label>
+                            <label htmlFor="comment-message">Message</label>
                             <textarea id="comment-message" rows="5"></textarea>
                         </div>
                         <button className="btn btn--submit" type="submit">Post Comment</button>

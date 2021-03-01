@@ -4,14 +4,15 @@
     justify-content: center;
     height: 250px;
     position: relative;
-    background: url(../../../assets/images/TechBG.jpg) no-repeat top center;
+    background: url(../../../assets/images/Greatest-NBA-Players-Best-NBA-Players-Ranking-NBA-Players-NBA-Goat.-Who-Is-The-Best-Player-Ever-5x8.jpg) no-repeat top center;
     background-size: cover;
     &__details {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 15px;
+        padding: 25px;
         color: #ffffff;
+        background: rgba(0,0,0,0.5);
         p {
             margin-bottom: 15px;
             font-size: 18px;

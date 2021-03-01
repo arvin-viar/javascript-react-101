@@ -1,32 +1,16 @@
 import { useState, useEffect } from "react";
-import FeaturedPostArticle from "./FeaturedPostArticle";
+import FeaturedArticleItem from "./FeaturedArticleItem";
 import Loader from "../Loader";
-import { getData } from "../../helpers/api";
 
-function FeaturedPosts() {
-    const [featuredPosts, setFeaturedPosts] = useState([]); 
+function FeaturedPosts(props) {
+    const { posts } = props;
+    const [featuredPosts, setFeaturedPosts] = useState([...posts]); 
 
     useEffect(() => {
-        const query = {view: "featured-posts", maxRecords: 5};
-        const postsData = getData('posts', query);
-        postsData.then((data) => {
-            console.log(data);
-            const postsData = data.map(record => {
-                return {
-                    id: record.id,
-                    dateCreated: record.fields.Created,
-                    title: record.fields.title,
-                    body: record.fields.body,
-                    authorId: record.fields.authorId,
-                    authorFirstname: record.fields.authorFirstname,
-                    authorLastname: record.fields.authorLastname,
-                    authorTeam: record.fields.authorTeam,
-                };
-            });
-            console.log(postsData);
-            setFeaturedPosts(postsData);
-        });
-    }, []);
+        const featPosts = [...posts];
+        const slicedPosts = featPosts.slice(featPosts.length - 5);
+        setFeaturedPosts(slicedPosts);
+    }, [posts]);
 
     return (
         <>
@@ -35,7 +19,7 @@ function FeaturedPosts() {
                 <section className="featured__list">
                 {featuredPosts.length > 0 
                     ? (
-                        featuredPosts.map((post) => <FeaturedPostArticle key={post.id} {...post} />)
+                        featuredPosts.map((post) => <FeaturedArticleItem key={post.id} {...post} />)
                     ) : (
                         <Loader />
                     )

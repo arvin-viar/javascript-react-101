@@ -4,7 +4,7 @@ function CategoryBanner() {
             <div className="container">
                 <div className="categories__header-wrap">
                     <div className="categories__header-content">
-                        <h1 className="title">Cameras</h1>
+                        <h1 className="title">Top Stories</h1>
                         <p className="description">
                             Suspendisse congue at nisl id sagittis. Etiam purus odio, pharetra vitae dui finibus,
                             laoreet dignissim libero.

@@ -1,19 +1,27 @@
+import { Link } from "react-router-dom";
 import authorImage from "../../assets/images/author-dp.jpg";
 
-function ArticleAuthor() {
+function ArticleAuthor(props) {
+    const { id = "", fname = [], lname = [], team = [], about = [], picture = [] } = props;
     return (
         <div className="article__author">
-            <img className="article__author-pic" src={authorImage} alt="author dp" />
+            <img className="article__author-pic" src={picture.url ? picture.url : `${authorImage}`} alt="author dp" />
             <div className="article__author-details">
                 <p className="article__author-info">
-                    <span>Capture Man</span><span>Photographer</span>
+                    <span>
+                        <Link to={`/author-details/${id}`}>{fname} {lname}</Link>
+                    </span>
+                    <span>{team}</span>
                 </p>
                 <p className="article__author-description">
-                    Vestibulum vel orci et mi euismod sodales. 
-                    Quisque sit amet odio imperdiet, vehicula sem eget, scelerisque orci. 
-                    Donec neque sem, efficitur interdum dui eget, tristique tempus ante. 
-                    Etiam tincidunt porta blandit. Duis vulputate eu lacus quis cursus. 
-                    Integer eget ornare justo. 
+                    {about.split('\n').map(function(item, key) {
+                        return (
+                            <span key={key}>
+                            {item}
+                            <br/>
+                            </span>
+                        )
+                    })}
                 </p>
             </div>
         </div>

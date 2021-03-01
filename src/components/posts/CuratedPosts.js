@@ -1,44 +1,23 @@
-import curatedImage from "../../assets/images/temp/consoles.jpg";
+import CuratedItem from "./CuratedItem";
+import Loader from "../Loader";
 
-function CuratedPosts() {
+function CuratedPosts(props) {
+    const { posts } = props;
     return (
         <section className="curated">
             <div className="container">
-                <ul className="curated__list">
-                    <li className="curated__item">
-                        <div className="curated__item-wrap">
-                            <img className="curated__item-image" src={curatedImage} alt="curate img" />
-                            <div className="curated__item-details">
-                                <h3>Lorem ipsum dolor</h3>
-                                <p>
-                                    Etiam purus odio, pharetra vitae dui finibus, laoreet dignissim libero...
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li className="curated__item">
-                        <div className="curated__item-wrap">
-                            <img className="curated__item-image" src={curatedImage} alt="curate img 1" />
-                            <div className="curated__item-details">
-                                <h3>Lorem ipsum dolor</h3>
-                                <p>
-                                    Etiam purus odio, pharetra vitae dui finibus, laoreet dignissim libero...
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li className="curated__item">
-                        <div className="curated__item-wrap">
-                            <img className="curated__item-image" src={curatedImage} alt="curate img 2" />
-                            <div className="curated__item-details">
-                                <h3>Lorem ipsum dolor</h3>
-                                <p>
-                                    Etiam purus odio, pharetra vitae dui finibus, laoreet dignissim libero...
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                {posts.length > 0 
+                    ? (
+                        <ul className="curated__list">
+                        {
+                            posts.map((post) => <CuratedItem key={post.id} post={post} />)
+                        }
+                        </ul>
+                    ) 
+                    : (
+                        <Loader />
+                    )
+                }
             </div>
         </section>
     )

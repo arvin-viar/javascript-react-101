@@ -4,7 +4,7 @@
         position: relative;
         height: 250px;
         color: #ffffff;
-        background: url(../../../../assets/images/TechBG.jpg) no-repeat center center;
+        background: url(../../../../assets/images/Greatest-NBA-Players-Best-NBA-Players-Ranking-NBA-Players-NBA-Goat.-Who-Is-The-Best-Player-Ever-5x8.jpg) no-repeat center center;
         background-size: cover;
         & > .container {
             height: inherit;
@@ -35,6 +35,12 @@
                 font-size: 3em;
                 text-transform: uppercase;
             }
+        }
+        @include tablet {
+            height: 350px;
+        }
+        @include desktop {
+            height: 350px;
         }
     }
     &__nav {

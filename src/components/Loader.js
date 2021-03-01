@@ -1,9 +1,10 @@
-import loaderImg from "../assets/images/loader.gif";
 
-function Loader() {
+import loader from "../assets/images/preloader.gif";
+
+export function Loader() {
     return (
         <aside className="articles__list-loader">
-            <img className="loader" src={loaderImg} alt="site loader" />
+            <img className="loader" src={loader} alt="site loader" />
         </aside>
     )
 }

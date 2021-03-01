@@ -36,3 +36,17 @@ export function toggleDarkMode(e) {
     toggleActive(element);
     body.classList.toggle('dark-theme');
 }
+
+export function randomPosts(arr = [], size = 0) {
+    if (arr.length < 1) { return; }
+    let new_ar = [...arr];
+    new_ar.splice(Math.floor(Math.random()*arr.length),1);
+    return arr.length <= (size+1) ? new_ar : randomPosts(new_ar, size);
+}
+
+export function randomItem(arr = [], size = 0) {
+    if (arr.length < 1) { return; }
+    let new_ar = [...arr];
+    new_ar.splice(Math.floor(Math.random()*arr.length),1);
+    return arr.length <= (size+1) ? new_ar : randomPosts(new_ar, size);
+}
