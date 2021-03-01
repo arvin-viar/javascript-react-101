@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
 import { randomItem } from "../../helpers/helper";
+import styled from "styled-components";
 import AuthorItem from "./AuthorItem";
 import Loader from "../Loader"
 
+const FeaturedAuthorSetion = styled.section`
+    padding: 15px 0;
+`
+
+const Container = styled.div`
+    max-width: 1024px;
+    margin: 0 auto;
+`
+
 function FeaturedAuthor(props) {
-    console.log(props);
     const { authors, posts } = props;
     const [_featuredAuthor, _setFeaturedAuthor] = useState({
         author: null,
@@ -32,8 +41,8 @@ function FeaturedAuthor(props) {
 
 
     return (
-        <section className="featured-author">
-            <div className="container">
+        <FeaturedAuthorSetion>
+            <Container>
                 {_featuredAuthor.author
                     ? (
                         <AuthorItem featuredAuthor={_featuredAuthor} />
@@ -41,8 +50,8 @@ function FeaturedAuthor(props) {
                         <Loader />
                     )
                 }
-            </div>
-        </section>
+            </Container>
+        </FeaturedAuthorSetion>
     )
 }
 

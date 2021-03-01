@@ -1,6 +1,28 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import featuredImage from "../../assets/images/temp/consoles.jpg";
+
+const AuthorWrap = styled.div`
+    padding: 0 15px;
+`
+
+const AuthorInfo = styled.div`
+    margin-bottom: 15px;
+`
+
+const AuthorPosts = styled.ul`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    li {
+        flex: 1 0 100%;
+        margin-bottom: 15px;
+        @media (min-width: 768px) {
+            flex: 0 0 32%;
+        }
+    }
+`
 
 function AuthorItem(props) {
     const { author, posts } = props.featuredAuthor;
@@ -13,15 +35,15 @@ function AuthorItem(props) {
     }, [author, posts]);
 
     return (
-        <div className="featured-author__wrap">
-            <div className="featured-author__info">
+        <AuthorWrap>
+            <AuthorInfo>
                 <h2>
                     <Link to={`/author-details/${_authorData.id}`}>
                         {_authorData.fname} {_authorData.lname}
                     </Link> | {_authorData.team}
                 </h2>
-            </div>
-            <ul className="featured-author__posts">
+            </AuthorInfo>
+            <AuthorPosts>
             {
                 _authorPosts.length > 0
                 ? (
@@ -43,8 +65,8 @@ function AuthorItem(props) {
                     })
                 ) : ('')
             }
-            </ul>
-        </div>
+            </AuthorPosts>
+        </AuthorWrap>
     )
 }
 

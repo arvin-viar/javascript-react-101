@@ -1,9 +1,56 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import CategoryBanner from "./CategoryBanner";
+
+const Categories = styled.section`
+    margin-bottom: 30px;
+    @media (min-width: 768px) {
+        margin-bottom: 0;
+    }
+    .categories__nav {
+        text-align: center;
+        background: #061a40;
+        &-menu {
+            display: flex;
+            overflow: auto;
+            background: none;
+            &-item {
+                display: inline-block;
+                vertical-align: middle;
+                a {
+                    display: flex;
+                    height: 100%;
+                    padding: 15px 20px;
+                    align-items: center;
+
+                    @media (min-width: 768px) {
+                        display: block;
+                        color: #e4e9f1;
+                    }
+                }
+                &--active {
+                    background: #001233;
+                    a {
+                        color: #0466c8;
+                    }
+                }
+                @media (min-width: 768px) {
+                    display: block;
+                }
+            }
+            @media (min-width: 768px){
+                padding: 0 15px;
+            }
+        }
+        @media (min-width: 768px) {
+            display: block;
+        }
+    }
+`
 
 function CuratedPosts() {
     return (
-        <section className="categories">
+        <Categories>
             <CategoryBanner />
             <nav className="categories__nav">
                 <div className="container">
@@ -23,7 +70,7 @@ function CuratedPosts() {
                     </ul>
                 </div>
             </nav>
-        </section>
+        </Categories>
     )
 }
 

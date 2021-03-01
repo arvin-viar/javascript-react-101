@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import FeaturedArticleItem from "./FeaturedArticleItem";
 import Loader from "../Loader";
+
+const Featured = styled.section`
+    padding: 30px 0;
+    .featured__list {
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+    }
+`
 
 function FeaturedPosts(props) {
     const { posts } = props;
@@ -14,7 +24,7 @@ function FeaturedPosts(props) {
 
     return (
         <>
-        <section className="featured">
+        <Featured>
             <div className="container">
                 <section className="featured__list">
                 {featuredPosts.length > 0 
@@ -26,7 +36,7 @@ function FeaturedPosts(props) {
                 }
                 </section>
             </div>
-        </section>
+        </Featured>
         </>
     );
 }
