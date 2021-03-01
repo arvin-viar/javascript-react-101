@@ -1,0 +1,116 @@
+.dark-mode {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    button {
+        width: 80px;
+        height: 40px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        background-image: url('../../../assets/images/sprite-dark-mode-80.png');
+        background-position: top;
+        text-indent: -9999px;
+        outline: none;
+        cursor: pointer;
+        &.active {
+            background-position: bottom;
+        }
+    }
+}
+
+.dark-theme {
+    background: #061a40;
+
+    main {
+        color: #fefffe;
+    }
+
+    .btn--submit {
+        background: #21175e;
+    }
+
+    .main-header,
+    footer,
+    .categories__nav {
+        background: #000;
+    }
+
+    .main-nav {
+        &__menu-item {
+            a {
+                color: #a895f5;
+                border-color: #a895f5;
+                &:hover {
+                    color: #cdc7e5;
+                }
+            }
+        }
+    }
+
+    .featured__item-details-category,
+    .featured__item-details-posted,
+    .featured__item-details-author,
+    .featured__item-details-body {
+        color: #fefffe;
+    }
+    .featured__item-details {
+        color: #ffffff;
+        background: #33415c;
+        @include tablet {
+            background: none;
+        }
+        @include desktop {
+            background: none;
+        }
+    }
+
+    .categories__nav-menu-item {
+        a {
+            color: #463c78;
+        }
+        &--active {
+            background: #21175e;
+            a {
+                color: #cdc7e5;
+            }
+        }
+    }
+
+    .articles {
+        &__header {
+            h1 {
+                color: #a895f5;
+            }
+        }
+        &__item {
+            &-posted {
+                background: #21175e;
+                &::after {
+                    border-color: #21175e transparent transparent transparent;
+                }
+            }
+        }
+        &__item {
+            &-details {
+                h1 {
+                    color: #a895f5;
+                }
+            }
+        }
+    }
+
+    .article {
+        &__author {
+            background: #33415c;
+        }
+    }
+
+    .comments {
+        &__form {
+            background: #33415c;
+        }
+    }
+}
