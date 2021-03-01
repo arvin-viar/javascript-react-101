@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
-import PostArticle from "../components/posts/PostArticle";
+import ArticleItem from "../components/posts/ArticleItem";
 import CuratedPosts from "../components/posts/CuratedPosts";
 import Categories from "../components/posts/Categories";
 import { sortPosts, getFilteredPosts } from "../helpers/helper";
-import { getData } from "../helpers/api";
-import loader from "../assets/images/loader.gif";
+import { randomPosts } from "../helpers/helper";
+import Loader from "../components/Loader";
 
-function Articles() {
-    const [users, setUsers] = useState([]);
-    const [_posts, _setPosts] = useState([]);
+function ArticlesPage(props) {
+    const { posts, authors } = props;
+    
+    const [_posts, _setPosts] = useState([...posts]);
+    const [_users, _setUsers] = useState([...authors]);
+    const [_topThree, _setTopThree] = useState([]);
     const [_defaultPosts, _setDefaultPosts] = useState([]);
+
     const [sorted, setSorted] = useState({
         isSorted: false,
         sortBy: 'none'
@@ -21,45 +25,37 @@ function Articles() {
     });
 
     useEffect(() => {
-        const query = {view: "grid"};
-        const postsData = getData('posts', query);
-        postsData.then((data) => {
-            const postsData = data.map(record => {
-                const authorId = record.fields.authorId;
-                return {
-                    id: record.id,
-                    dateCreated: record.fields.Created,
-                    title: record.fields.title,
-                    body: record.fields.body,
-                    authorId: authorId[0],
-                    authorFirstname: record.fields.authorFirstname,
-                    authorLastname: record.fields.authorLastname,
-                    authorTeam: record.fields.authorTeam,
-                };
-            });
-            _setPosts(postsData);
-            _setDefaultPosts(postsData);
+        const mappedPosts = posts.map(record => {
+            const authorId = record.fields.authorId;
+            const images = record.fields.image ? record.fields.image : [];
+            return {
+                id: record.id,
+                dateCreated: record.fields.Created,
+                title: record.fields.title,
+                body: record.fields.body,
+                image: images[0],
+                authorId: authorId[0],
+                authorFirstname: record.fields.authorFirstname,
+                authorLastname: record.fields.authorLastname,
+                authorTeam: record.fields.authorTeam,
+            };
         });
-    }, []);
+        const mappedTopThree = randomPosts(mappedPosts, 3);
+        _setTopThree(mappedTopThree);
+        _setPosts([...mappedPosts]);
+        _setDefaultPosts([...mappedPosts]);
+    }, [posts]);
 
     useEffect(() => {
-        const query = {view: "grid"};
-        const authorsData = getData('author', query);
-        authorsData.then((data) => {
-            const authors = data.map(record => {
-                return {
-                    id: record.id,
-                    lastname: record.fields.lastname,
-                    firstname: record.fields.firstname,
-                };
-            });
-            setUsers(authors);
+        const mappedAuthors = authors.map(record => {
+            return {
+                id: record.id,
+                lastname: record.fields.lastname,
+                firstname: record.fields.firstname,
+            };
         });
-    }, []);
-
-    useEffect(() => {
-        _setPosts(_posts);
-    }, [_posts]);
+        _setUsers([...mappedAuthors]);
+    }, [authors]);
 
     function handleSort(e) {
         const selected = e.currentTarget.value;
@@ -74,26 +70,6 @@ function Articles() {
             const filteredPosts = getFilteredPosts(filtered.filterKey, filtered.filterValue, _defaultPosts);
             const newSortedPosts = sortPosts(selected, filteredPosts, _defaultPosts);
             _setPosts(newSortedPosts);
-        }
-    }
-
-    function filterPosts(key = 'id', value) {
-        console.log(key, value);
-        if (value === 'all') {
-            if (sorted.isSorted && sorted.sortBy !== 'none') {
-                const newSortedPosts = sortPosts(sorted.sortBy, _defaultPosts, _defaultPosts);
-                _setPosts(newSortedPosts);
-            } else {
-                _setPosts([..._defaultPosts]);
-            }
-            return;
-        }
-        const filteredPosts = getFilteredPosts(key, value, _defaultPosts);
-        if (sorted.isSorted && sorted.sortBy !== 'none') {
-            const newSortedPosts = sortPosts(sorted.sortBy, filteredPosts, _defaultPosts);
-            _setPosts(newSortedPosts);
-        } else {
-            _setPosts(filteredPosts);
         }
     }
 
@@ -114,10 +90,38 @@ function Articles() {
         filterPosts(filterKey, selectedValue);
     }
 
+    function filterPosts(key = 'id', value) {
+        if (value === 'all') {
+            if (sorted.isSorted && sorted.sortBy !== 'none') {
+                const newSortedPosts = sortPosts(sorted.sortBy, _defaultPosts, _defaultPosts);
+                _setPosts(newSortedPosts);
+            } else {
+                _setPosts([..._defaultPosts]);
+            }
+            return;
+        }
+        const filteredPosts = getFilteredPosts(key, value, _defaultPosts);
+        if (sorted.isSorted && sorted.sortBy !== 'none') {
+            const newSortedPosts = sortPosts(sorted.sortBy, filteredPosts, _defaultPosts);
+            _setPosts(newSortedPosts);
+        } else {
+            _setPosts(filteredPosts);
+        }
+    }
+
     return (
         <main>
             <Categories />
-            <CuratedPosts />
+            <div>
+            {_topThree && _topThree.length > 0 
+                ? (
+                    <CuratedPosts posts={_topThree} />
+                ) 
+                : (
+                    <Loader />
+                )
+            }
+            </div>
             <section className="articles">
                 <div className="container">
                     <div className="row">
@@ -133,9 +137,9 @@ function Articles() {
                                 </select>
                                 <select name="filter" className="post-filter"  id="filter-byauthor" data-filterkey="authorId" onChange={handleFilter}>
                                     <option value="all">Filter By Author</option>
-                                    {users.length > 0 
+                                    {_users.length > 0 
                                         ? (
-                                            users.map((user) => {
+                                            _users.map((user) => {
                                                 return (
                                                     <option key={user.id} value={user.id}>{user.firstname} {user.lastname}</option>
                                                 );
@@ -149,11 +153,9 @@ function Articles() {
                         <div className="articles__list">
                             {_posts.length > 0 
                                 ? (
-                                    _posts.map((post) => <PostArticle key={post.id} {...post} />)
+                                    _posts.map((post) => <ArticleItem key={post.id} {...post} />)
                                 ) : (
-                                    <aside className="articles__list-loader">
-                                        <img className="loader" src={loader} alt="site loader" />
-                                    </aside>
+                                    <Loader />
                                 )
                             }
                         </div>
@@ -164,4 +166,4 @@ function Articles() {
     );
 }
 
-export default Articles;
+export default ArticlesPage;
