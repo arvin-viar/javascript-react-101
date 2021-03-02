@@ -7,7 +7,6 @@ const CuratedSection = styled.section`
     position: relative;
     min-height: 300px;
     margin-bottom: 30px;
-    display: none;
 `
 
 const Container = styled.div`

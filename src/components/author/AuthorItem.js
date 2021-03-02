@@ -22,6 +22,10 @@ const AuthorPosts = styled.ul`
             flex: 0 0 32%;
         }
     }
+    &::after {
+        content: "";
+        flex: 0 0 32%;
+    }
 `
 
 function AuthorItem(props) {

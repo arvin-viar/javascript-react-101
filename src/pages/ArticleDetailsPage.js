@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import Details from "../components/posts/Details";
+
+const Main = styled.main`
+    
+`
 
 function ArticleDetailsPage(props) {
     const { posts } = props;
@@ -18,9 +23,9 @@ function ArticleDetailsPage(props) {
     }, [posts, postId]);
 
     return (
-        <main>
+        <Main>
             <Details type="article" post={_record} />
-        </main>
+        </Main>
     );
 }
 

@@ -52,7 +52,14 @@ const Container = styled.div`
 `
 
 const ArticlesList = styled.div`
-    
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    &::after {
+        content: "";
+        flex: 0 0 32%;
+    }
 `
 
 function ArticlesPage(props) {
